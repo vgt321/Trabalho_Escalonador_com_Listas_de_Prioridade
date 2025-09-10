@@ -9,3 +9,4 @@ public class ListaEncadeada {
 
 }
 //Olá mardson, eu sou aqui para te ajudar.
+//Aqui temos uma classe chamada "ListaEncadeada" 
