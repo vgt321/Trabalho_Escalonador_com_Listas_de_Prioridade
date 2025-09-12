@@ -1,11 +1,11 @@
-    public class Processos {
-        private int id;
-        private String nome;
-        private int prioridade;
-        private int ciclosNecessarios;
-        private String recursosNecessarios;
+public class Processos {
+    private int id;
+    private String nome;
+    private int prioridade;
+    private int ciclosNecessarios;
+    private String recursosNecessarios;
 
-    public Processos (int id, String nome, int prioridade, int ciclosNecessarios, String recursosNecessarios) {
+    public Processos(int id, String nome, int prioridade, int ciclosNecessarios, String recursosNecessarios) {
         this.id = id;
         this.nome = nome;
         setPrioridade(prioridade);
@@ -16,15 +16,19 @@
     public int getid() {
         return id;
     }
+
     public String getNome() {
         return nome;
     }
+
     public int getPrioridade() {
         return prioridade;
     }
+
     public int getCiclosNecessarios() {
         return ciclosNecessarios;
     }
+
     public String getRecursosNecessarios() {
         return recursosNecessarios;
     }
@@ -38,11 +42,10 @@
     }
 
     public void setPrioridade(int prioridade) {
-        if (prioridade < 1 || prioridade > 3){
+        if (prioridade < 1 || prioridade > 3) {
             System.out.println("Prioridade Invalida! Definindo como 1");
             this.prioridade = 1;
-        }
-        else{
+        } else {
             this.prioridade = prioridade;
         }
 
@@ -67,6 +70,3 @@
         texto = texto + "]";
         return texto;
     }
-
-
-
