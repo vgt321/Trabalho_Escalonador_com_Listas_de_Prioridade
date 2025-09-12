@@ -1,107 +1,73 @@
-// Classe ListaCircular: representa uma lista circular simples
-
-
 public class ListaCircular {
-    // Classe interna No: representa um nó da lista
     private class No {
-        Object dado;   // valor guardado
-        No proximo;    // referência para o próximo nó
+        Object dado;
+        No proximo;
 
-        public No(Object dado) {
+        No(Object dado) {
             this.dado = dado;
             this.proximo = null;
         }
     }
 
-    private No tail;     // ponteiro para o último nó (cauda)
-    private int tamanho; // quantidade de elementos
+    private No primeiro;
+    private No ultimo;
+    private int tamanho;
 
-    // Construtor: começa com a lista vazia
     public ListaCircular() {
-        this.tail = null;
+        this.primeiro = null;
+        this.ultimo = null;
         this.tamanho = 0;
     }
 
-    // Método para inserir um elemento no fim da lista
-    public void inserirNoFim(Object elemento) {
-        No novo = new No(elemento);
+    // Verifica se a lista está vazia
+    public boolean estaVazia() {
+        return primeiro == null;
+    }
 
-        if (tail == null) { // lista vazia
-            tail = novo;
-            tail.proximo = tail; // aponta para si mesmo
+    // Insere um novo elemento no fim da lista (fila)
+    public void inserirNoFim(Object dado) {
+        No novoNo = new No(dado);
+        if (estaVazia()) {
+            primeiro = novoNo;
+            ultimo = novoNo;
+            novoNo.proximo = primeiro; // Aponta para si mesmo
         } else {
-            novo.proximo = tail.proximo; // novo aponta para a cabeça
-            tail.proximo = novo;         // antigo último aponta para o novo
-            tail = novo;                 // novo vira o último
+            ultimo.proximo = novoNo;
+            ultimo = novoNo;
+            ultimo.proximo = primeiro; // Aponta de volta para o primeiro
         }
         tamanho++;
     }
 
-    // Método para remover o primeiro elemento (cabeça)
+    // Remove o elemento do início da lista (fila)
     public Object removerDoInicio() {
-        if (tail == null) {
-            System.out.println("Lista vazia, nada para remover.");
+        if (estaVazia()) {
             return null;
         }
-
-        No head = tail.proximo; // primeiro nó
-        Object removido = head.dado;
-
-        if (tail == head) { // só um elemento
-            tail = null;
+        Object dadoRemovido = primeiro.dado;
+        if (primeiro == ultimo) { // Apenas um elemento na lista
+            primeiro = null;
+            ultimo = null;
         } else {
-            tail.proximo = head.proximo; // pula o antigo primeiro
+            primeiro = primeiro.proximo;
+            ultimo.proximo = primeiro; // A última referência aponta para o novo primeiro
         }
         tamanho--;
-        return removido;
+        return dadoRemovido;
     }
 
-    // Método para remover o último elemento (cauda)
-    public Object removerDoFim() {
-        if (tail == null) {
-            System.out.println("Lista vazia, nada para remover.");
-            return null;
-        }
-
-        Object removido = tail.dado;
-
-        if (tail.proximo == tail) { // só um elemento
-            tail = null;
-        } else {
-            No atual = tail.proximo; // começa na cabeça
-
-            // percorre até o nó anterior ao último
-            while (atual.proximo != tail) {
-                atual = atual.proximo;
-            }
-            atual.proximo = tail.proximo; // anterior aponta para a cabeça
-            tail = atual;                 // atual vira o novo último
-        }
-        tamanho--;
-        return removido;
-    }
-
-    // Método para exibir todos os elementos da lista
+    // Exibe o conteúdo da lista para depuração
     public void exibir() {
-        if (tail == null) {
-            System.out.println("A lista está vazia.");
+        if (estaVazia()) {
+            System.out.println("Vazia");
             return;
         }
-
-        No atual = tail.proximo; // começa na cabeça
+        No atual = primeiro;
         do {
-            System.out.println(atual.dado);
+            Processos p = (Processos) atual.dado;
+            System.out.print("(" + p.getId() + ", " + p.getNome() + ", P" + p.getPrioridade() + ") -> ");
             atual = atual.proximo;
-        } while (atual != tail.proximo); // para quando der a volta
-    }
-
-    // Método que verifica se a lista está vazia
-    public boolean estaVazia() {
-        return tail == null;
-    }
-
-    // Método que retorna a quantidade de elementos
-    public int tamanho() {
-        return tamanho;
+        } while (atual != primeiro);
+        System.out.println("(início)");
     }
 }
